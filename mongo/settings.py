@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+import django_mongoengine
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'api.apps.ApiConfig',
+    'api',
     'django_mongoengine',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 
-#MONGOENGINE_USER_DOCUMENT = 'django_mongoengine.auth.User'
+MONGOENGINE_USER_DOCUMENT = 'api.models.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,13 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework_mongoengine.generics import CreateAPIView,GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth import get_user_model
+#from django.contrib.auth import get_user_model
+from .models import User
 from .serializers import UserLoginSerializer, UserCreateSerializer
 
-User = get_user_model()
+#User = get_user_model()
 
 class UserRegister(CreateAPIView):
     serializer_class=UserCreateSerializer

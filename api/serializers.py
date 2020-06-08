@@ -1,15 +1,15 @@
 from rest_framework_mongoengine import serializers
-from django.contrib.auth import get_user_model
+#from django.contrib.auth import get_user_model
 from mongoengine.queryset.visitor import Q
 from django_mongoengine import fields
 from django_mongoengine.mongo_auth.models import MongoUser
-
-#User = get_user_model()
+from .models import User
+ #User = get_user_model()
 
 class UserCreateSerializer(serializers.DocumentSerializer):
     email2 = fields.EmailField(label='Confirm Email')
     class Meta:
-        model=MongoUser
+        model=User
         fields = ('username','email','password')
         extra_kwargs={
                         "password":{"write_only": True}
@@ -22,7 +22,7 @@ class UserCreateSerializer(serializers.DocumentSerializer):
         if email1 != email2:
             raise ValidationError("Emails must match.")
 
-        user_qs = MongoUser.objects.filter(email=email2)
+        user_qs = User.objects.filter(email=email2)
         if user_qs:
             raise ValidationError("This user has already registered.")
         return value
@@ -31,7 +31,7 @@ class UserCreateSerializer(serializers.DocumentSerializer):
         username = validated_data['username']
         email = validated_data['email']
         password = validated_data['password']
-        user_obj = MongoUser(
+        user_obj = User(
                 username = username,
                 email = email,
                 password=password
@@ -45,14 +45,14 @@ class UserLoginSerializer(serializers.DocumentSerializer):
     username = fields.StringField(max_length=50,blank=True)
     email = fields.EmailField(label="Email Address",blank=True)
     class Meta:
-        model = MongoUser
+        model = User
         fields = ('username','email','password')
         extra_kwargs={
                         "password":{"write_only": True}
         }
 
 
-    def validate_data(self,data):
+    def validated_data(self,data):
         user_obj = None
         email = data.get("email",None)
         username = data.get("username",None)
@@ -60,7 +60,7 @@ class UserLoginSerializer(serializers.DocumentSerializer):
         if not email and not username:
             raise ValidationError("A Username or email is required to login.")
 
-        user = MongoUser.objects.filter(
+        user = User.objects.filter(
             Q(email=email) |
             Q(username=username)
         )
