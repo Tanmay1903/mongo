@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'api',
     'django_mongoengine',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,11 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'rest_framework_mongoengine',
     'rest_framework.authentication',
     'django_mongoengine.mongo_auth',
     'django_mongoengine.mongo_admin.sites',
     'django_mongoengine.mongo_admin',
+    'api',
 ]
 
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
@@ -89,6 +90,7 @@ AUTHENTICATION_BACKENDS = (
 
 DATABASES = {
     'default': {
+        #'ENGINE': 'django.db.backends.dummy'
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
@@ -96,8 +98,8 @@ DATABASES = {
 
 MONGODB_DATABASES = {
     "default": {
-        "name": "mongo",
-        "host": 'mongodb+srv://Tanmay1903:Tanmaymongodb@intern-9eye-at0b4.mongodb.net/mongo?retryWrites=true&w=majority',
+        "name": "mongo1",
+        "host": 'mongodb+srv://Tanmay1903:Tanmaymongodb@intern-9eye-at0b4.mongodb.net/mongo1?retryWrites=true&w=majority',
         "password": "Tanmaymongodb",
         "username": "Tanmay1903",
         "tz_aware": True, # if you using timezones in django (USE_TZ = True)
